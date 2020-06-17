@@ -1,24 +1,22 @@
 'use strict';
+const fs = require('fs');
 
-class Jozko
+process.on('uncaughtException', () => {});
+process.on('unhandledRejection', () => {});
+
+describe( 'Tests', ( done ) =>
 {
-    set name( value )
+    var files = fs.readdirSync( __dirname + '/tests' );
+
+    for( let file of files )
     {
-        return new Promise(( resolve, reject ) =>
+        //if( !file.match(/\.js$/)/** / || ![ 'callbacks.js', 'freeze.js', 'nonexisting.js' ].includes( file )/**/ ){ continue; }
+        //if( !file.match(/\.js$/)/**/ || ![ /*'sessions.js', 'carts.js', 'users.js', 'products.js', 'categories.js' 'parameters.js' ].includes( file )/**/ ){ continue; }
+        //if( !file.match(/\.js$/)/**/ || ![ 'categories.js' ].includes( file )/**/ ){ continue; }
+
+        describe( file, () =>
         {
-            resolve( value );
+            require( __dirname + '/tests/' + file );
         });
     }
-}
-
-let jozo = new Jozko();
-
-async function test()
-{
-    await ( jozo.name = 'fero' );
-
-
-    console.log( 'hotovo' );
-}
-
-test();
+});
