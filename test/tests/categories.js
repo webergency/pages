@@ -48,3 +48,16 @@ it( 'should fetch category tree', async() =>
 
     await server.destroy();
 });
+
+it( 'should fetch category pages', async() =>
+{
+    let server = new MockServer(8080), shop = new Pages({ webroot: 'http://localhost:8080', locale: 'sk' });
+
+    let id = 5, category = await shop.category( id );
+
+    let pages = await category.pages();
+
+    assert.equal( pages, await category.pages());
+
+    await server.destroy();
+});
